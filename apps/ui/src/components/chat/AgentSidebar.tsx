@@ -86,6 +86,10 @@ function RuntimeIcon({ agent, className }: { agent: AgentDescriptor; className?:
     return <ClaudeCodeIconPair className={className} />
   }
 
+  if (preset === 'github-copilot' || provider === 'github-copilot') {
+    return <img src="/agents/github-copilot-logo.svg" alt="" aria-hidden="true" className={className} />
+  }
+
   if (provider.includes('anthropic') || provider.includes('claude')) {
     return <img src="/agents/claude-logo.svg" alt="" aria-hidden="true" className={className} />
   }
@@ -108,6 +112,10 @@ function getModelLabel(agent: AgentDescriptor, preset: ManagerModelPreset | unde
 
   if (preset === 'claude-code') {
     return 'claude-code'
+  }
+
+  if (preset === 'github-copilot') {
+    return 'github-copilot'
   }
 
   const modelId = agent.model.modelId.trim().toLowerCase()

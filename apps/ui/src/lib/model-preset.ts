@@ -4,6 +4,7 @@ const CODEX_APP_MODEL_ID = 'gpt-5.4'
 const LEGACY_CODEX_APP_MODEL_ID = 'default'
 const PI_CODEX_MODEL_ID = 'gpt-5.4'
 const LEGACY_PI_CODEX_MODEL_ID = 'gpt-5.3-codex'
+const GITHUB_COPILOT_MODEL_ID = 'gpt-4o'
 
 export function inferModelPreset(agent: AgentDescriptor): ManagerModelPreset | undefined {
   const provider = agent.model.provider.trim().toLowerCase()
@@ -26,6 +27,10 @@ export function inferModelPreset(agent: AgentDescriptor): ManagerModelPreset | u
 
   if (provider === 'anthropic-claude-code' && modelId === 'claude-opus-4-6') {
     return 'claude-code'
+  }
+
+  if (provider === 'github-copilot' && modelId === GITHUB_COPILOT_MODEL_ID) {
+    return 'github-copilot'
   }
 
   return undefined

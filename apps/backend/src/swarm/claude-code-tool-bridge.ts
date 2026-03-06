@@ -14,7 +14,8 @@ const SPAWN_MODEL_PRESET_SCHEMA = z.union([
   z.literal("pi-codex"),
   z.literal("pi-opus"),
   z.literal("codex-app"),
-  z.literal("claude-code")
+  z.literal("claude-code"),
+  z.literal("github-copilot")
 ]);
 
 const MESSAGE_CHANNEL_SCHEMA = z.union([

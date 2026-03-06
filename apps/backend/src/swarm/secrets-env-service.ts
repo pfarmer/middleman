@@ -77,6 +77,21 @@ export class SecretsEnvService {
       });
     }
 
+    if (!requirements.some((requirement) => requirement.name === "GITHUB_TOKEN")) {
+      const githubToken = this.resolveEnvValue("GITHUB_TOKEN");
+      requirements.push({
+        name: "GITHUB_TOKEN",
+        description:
+          "Personal access token used by the github-copilot runtime for authentication. " +
+          "Requires a GitHub account with Copilot access.",
+        required: false,
+        helpUrl: "https://github.com/settings/tokens",
+        skillName: "github-copilot-runtime",
+        isSet: typeof githubToken === "string" && githubToken.trim().length > 0,
+        maskedValue: githubToken ? SETTINGS_ENV_MASK : undefined
+      });
+    }
+
     requirements.sort((left, right) => {
       const byName = left.name.localeCompare(right.name);
       if (byName !== 0) return byName;

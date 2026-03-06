@@ -52,22 +52,27 @@ describe('RuntimeFactory routing', () => {
     const piRuntime = { runtime: 'pi' } as any
     const codexRuntime = { runtime: 'codex' } as any
     const claudeRuntime = { runtime: 'claude-code' } as any
+    const githubCopilotRuntime = { runtime: 'github-copilot' } as any
 
     const createPiRuntimeForDescriptor = vi.fn(async () => piRuntime)
     const createCodexRuntimeForDescriptor = vi.fn(async () => codexRuntime)
     const createClaudeCodeRuntimeForDescriptor = vi.fn(async () => claudeRuntime)
+    const createGithubCopilotRuntimeForDescriptor = vi.fn(async () => githubCopilotRuntime)
 
     ;(factory as any).createPiRuntimeForDescriptor = createPiRuntimeForDescriptor
     ;(factory as any).createCodexRuntimeForDescriptor = createCodexRuntimeForDescriptor
     ;(factory as any).createClaudeCodeRuntimeForDescriptor = createClaudeCodeRuntimeForDescriptor
+    ;(factory as any).createGithubCopilotRuntimeForDescriptor = createGithubCopilotRuntimeForDescriptor
 
     const piDescriptor = makeDescriptor('openai-codex', 'gpt-5.3-codex')
     const codexDescriptor = makeDescriptor('openai-codex-app-server', 'gpt-5.4')
     const claudeDescriptor = makeDescriptor('anthropic-claude-code', 'claude-opus-4-6')
+    const githubCopilotDescriptor = makeDescriptor('github-copilot', 'gpt-4o')
 
     await expect(factory.createRuntimeForDescriptor(piDescriptor, 'pi-system')).resolves.toBe(piRuntime)
     await expect(factory.createRuntimeForDescriptor(codexDescriptor, 'codex-system')).resolves.toBe(codexRuntime)
     await expect(factory.createRuntimeForDescriptor(claudeDescriptor, 'claude-system')).resolves.toBe(claudeRuntime)
+    await expect(factory.createRuntimeForDescriptor(githubCopilotDescriptor, 'copilot-system')).resolves.toBe(githubCopilotRuntime)
 
     expect(createPiRuntimeForDescriptor).toHaveBeenCalledTimes(1)
     expect(createPiRuntimeForDescriptor).toHaveBeenCalledWith(piDescriptor, 'pi-system')
@@ -77,5 +82,8 @@ describe('RuntimeFactory routing', () => {
 
     expect(createClaudeCodeRuntimeForDescriptor).toHaveBeenCalledTimes(1)
     expect(createClaudeCodeRuntimeForDescriptor).toHaveBeenCalledWith(claudeDescriptor, 'claude-system')
+
+    expect(createGithubCopilotRuntimeForDescriptor).toHaveBeenCalledTimes(1)
+    expect(createGithubCopilotRuntimeForDescriptor).toHaveBeenCalledWith(githubCopilotDescriptor, 'copilot-system')
   })
 })

@@ -7,6 +7,8 @@ const LEGACY_PI_CODEX_MODEL_ID = "gpt-5.3-codex";
 const CODEX_APP_MODEL_ID = "gpt-5.4";
 const LEGACY_CODEX_APP_MODEL_ID = "default";
 
+const GITHUB_COPILOT_MODEL_ID = "gpt-4o";
+
 const MODEL_PRESET_DESCRIPTORS: Record<SwarmModelPreset, AgentModelDescriptor> = {
   "pi-codex": {
     provider: "openai-codex",
@@ -28,6 +30,11 @@ const MODEL_PRESET_DESCRIPTORS: Record<SwarmModelPreset, AgentModelDescriptor> =
   "claude-code": {
     provider: "anthropic-claude-code",
     modelId: "claude-opus-4-6",
+    thinkingLevel: "xhigh"
+  },
+  "github-copilot": {
+    provider: "github-copilot",
+    modelId: GITHUB_COPILOT_MODEL_ID,
     thinkingLevel: "xhigh"
   }
 };
@@ -90,6 +97,10 @@ export function inferSwarmModelPresetFromDescriptor(
 
   if (provider === "anthropic-claude-code" && modelId === "claude-opus-4-6") {
     return "claude-code";
+  }
+
+  if (provider === "github-copilot" && modelId === GITHUB_COPILOT_MODEL_ID) {
+    return "github-copilot";
   }
 
   return undefined;

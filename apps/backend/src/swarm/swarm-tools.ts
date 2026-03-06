@@ -40,7 +40,8 @@ const spawnModelPresetSchema = Type.Union([
   Type.Literal("pi-codex"),
   Type.Literal("pi-opus"),
   Type.Literal("codex-app"),
-  Type.Literal("claude-code")
+  Type.Literal("claude-code"),
+  Type.Literal("github-copilot")
 ]);
 
 const messageChannelSchema = Type.Union([
@@ -150,7 +151,7 @@ export function buildSwarmTools(host: SwarmToolHost, descriptor: AgentDescriptor
       name: "spawn_agent",
       label: "Spawn Agent",
       description:
-        "Create and start a new worker agent. agentId is required and normalized to lowercase kebab-case; if taken, a numeric suffix (-2, -3, …) is appended. archetypeId, systemPrompt, model, cwd, and initialMessage are optional. model accepts pi-codex|pi-opus|codex-app|claude-code.",
+        "Create and start a new worker agent. agentId is required and normalized to lowercase kebab-case; if taken, a numeric suffix (-2, -3, …) is appended. archetypeId, systemPrompt, model, cwd, and initialMessage are optional. model accepts pi-codex|pi-opus|codex-app|claude-code|github-copilot.",
       parameters: Type.Object({
         agentId: Type.String({
           description:
